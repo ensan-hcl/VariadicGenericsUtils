@@ -1,5 +1,5 @@
 //
-//  VariadicGreater.swift
+//  VariadicLessThan.swift
 //
 //
 //  Created by ensan on 2023/06/06.

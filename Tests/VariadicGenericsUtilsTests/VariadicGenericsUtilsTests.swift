@@ -35,14 +35,68 @@ final class VariadicGenericsUtilsTests: XCTestCase {
         }
     }
 
-    func testGreater() throws {
+    func testLessThan() throws {
         do {
-            let result = greater(left: 0, 4.1, 2.2, right: 1, 4.2, 5.2)
+            let result = lessThan(left: 0, 4.1, 2.2, right: 1, 4.2, 5.2)
             XCTAssertTrue(result)
         }
         do {
-            let result = greater(left: 1, right: 0)
+            let result = lessThan(left: 0, 4.1, 2.2, right: 1, 5.2, 2.1)
+            XCTAssertTrue(result)
+        }
+        do {
+            let result = lessThan(left: 0, 4.1, 2.2, right: 0, 5.2, 2.1)
+            XCTAssertTrue(result)
+        }
+        do {
+            let result = lessThan(left: "A", 23, Date().advanced(by: 100), right: "A", 42, Date().advanced(by: 100))
+            XCTAssertTrue(result)
+        }
+        do {
+            let result = lessThan(left: 1, right: 0)
             XCTAssertFalse(result)
         }
+    }
+
+    func testSortedOn() throws {
+        let users: [User] = [
+            User(name: "A", age: 42, joinedDate: Date().advanced(by: 100)),
+            User(name: "A", age: 42, joinedDate: Date().advanced(by: 200)),
+            User(name: "A", age: 23, joinedDate: Date().advanced(by: 200)),
+            User(name: "A", age: 23, joinedDate: Date().advanced(by: 100)),
+            User(name: "B", age: 42, joinedDate: Date().advanced(by: 200)),
+            User(name: "B", age: 23, joinedDate: Date().advanced(by: 200)),
+        ]
+        let result = users.sorted(on1: \.name, on2: \.age, on3: \.joinedDate)
+        XCTAssertEqual(result, [
+            users[3],
+            users[2],
+            users[0],
+            users[1],
+            users[5],
+            users[4]
+        ])
+    }
+
+    func testDebugOnlyPrint() {
+        // debugOnlyPrint("Hi", 42, true, [12, 32])
+    }
+}
+
+struct User: Equatable {
+    var name: String
+    var age: Int
+    var joinedDate: Date
+}
+
+extension Sequence {
+    func sorted(on1: KeyPath<Element, some Comparable>, on2: KeyPath<Element, some Comparable>, on3: KeyPath<Element, some Comparable>) -> [Element] {
+        func compareByKeyPath(left: Element, right: Element) -> Bool {
+            lessThan(
+                left: left[keyPath: on1], left[keyPath: on2], left[keyPath: on3],
+                right: right[keyPath: on1], right[keyPath: on2], right[keyPath: on3]
+            )
+        }
+        return self.sorted(by: compareByKeyPath)
     }
 }
