@@ -90,11 +90,11 @@ struct User: Equatable {
 }
 
 extension Sequence {
-    func sorted(on1: KeyPath<Element, some Comparable>, on2: KeyPath<Element, some Comparable>, on3: KeyPath<Element, some Comparable>) -> [Element] {
+    func sorted(on1: (Element) -> some Comparable, on2: (Element) -> some Comparable, on3: (Element) -> some Comparable) -> [Element] {
         func compareByKeyPath(left: Element, right: Element) -> Bool {
             lessThan(
-                left: left[keyPath: on1], left[keyPath: on2], left[keyPath: on3],
-                right: right[keyPath: on1], right[keyPath: on2], right[keyPath: on3]
+                left: on1(left), on2(left), on3(left),
+                right: on1(right), on2(right), on3(right)
             )
         }
         return self.sorted(by: compareByKeyPath)
