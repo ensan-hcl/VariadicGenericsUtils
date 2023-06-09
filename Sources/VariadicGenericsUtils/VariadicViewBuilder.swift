@@ -11,8 +11,8 @@ import SwiftUI
 @available(iOS 13, macOS 10.15, tvOS 13, watchOS 6, *)
 public extension ViewBuilder {
     @_disfavoredOverload
-    static func buildBlock<each Component: View>(_ components: repeat each Component) -> TupleView<(repeat each Component)> {
-        TupleView((repeat each components))
+    static func buildBlock<each Component: View>(_ component: repeat each Component) -> TupleView<(repeat each Component)> {
+        TupleView((repeat each component))
     }
 }
 #endif
