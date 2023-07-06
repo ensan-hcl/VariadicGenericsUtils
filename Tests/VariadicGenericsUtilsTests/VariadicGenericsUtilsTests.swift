@@ -22,6 +22,18 @@ final class VariadicGenericsUtilsTests: XCTestCase {
             XCTAssertEqual(result.7, "5")
             XCTAssertEqual(result.8, 6)
         }
+        do {
+            let result = concat(left: (1, true, 3, 4), right: (2, 3, 4, "5", 6))
+            XCTAssertEqual(result.0, 1)
+            XCTAssertEqual(result.1, true)
+            XCTAssertEqual(result.2, 3)
+            XCTAssertEqual(result.3, 4)
+            XCTAssertEqual(result.4, 2)
+            XCTAssertEqual(result.5, 3)
+            XCTAssertEqual(result.6, 4)
+            XCTAssertEqual(result.7, "5")
+            XCTAssertEqual(result.8, 6)
+        }
     }
 
     func testEqual() throws {
@@ -31,6 +43,10 @@ final class VariadicGenericsUtilsTests: XCTestCase {
         }
         do {
             let result = equal(left: 1, "2", 3, false, right: 1, "2", 3, false)
+            XCTAssertTrue(result)
+        }
+        do {
+            let result = equal(left: (1, "2", 3, false), right: (1, "2", 3, false))
             XCTAssertTrue(result)
         }
     }
@@ -55,6 +71,10 @@ final class VariadicGenericsUtilsTests: XCTestCase {
         do {
             let result = lessThan(left: 1, right: 0)
             XCTAssertFalse(result)
+        }
+        do {
+            let result = lessThan(left: (0, 4.1, 2.2), right: (1, 5.2, 2.1))
+            XCTAssertTrue(result)
         }
     }
 

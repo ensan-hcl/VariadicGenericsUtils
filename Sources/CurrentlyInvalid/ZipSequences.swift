@@ -9,9 +9,10 @@ enum NilError: Error {
     case `nil`
 }
 
+@available(macOS 14, *)
 public struct ZipSequences<each Base: Sequence>: Sequence {
     public init(_ sequences: (repeat each Base)) {
-        self.contents = contents
+        self.contents = sequences
     }
     
     public typealias Element = (repeat each Base.Element)
@@ -49,6 +50,7 @@ public struct ZipSequences<each Base: Sequence>: Sequence {
     }
 }
 
+@available(macOS 14, *)
 @inlinable public func zip<each S: Sequence>(_ sequences: repeat each S) -> ZipSequences<repeat each S> {
     ZipSequences((repeat each sequences))
 }

@@ -17,11 +17,14 @@ public extension Sequence {
     /// - Returns: A sorted array of the sequence's elements.
     func sorted<each T: Comparable>(on key: repeat (Element) -> each T) -> [Element] {
         func compareByKeyPath(left: Element, right: Element) -> Bool {
-            // 2023-06-08
+            // 2023-07-06
             // Error: Type of expression is ambiguous without more context
+            func application<B>(_ function: (Element) -> B, _ argument: Element) -> B {
+                function(argument)
+            }
             lessThan(
-                left: repeat ((each key)(left)),
-                right: repeat ((each key)(right))
+                left: repeat application(each key, left),
+                right: repeat application(each key, right)
             )
         }
 
