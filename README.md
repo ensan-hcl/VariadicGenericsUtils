@@ -30,41 +30,16 @@ print(result)
 // 出力: true
 ```
 
-### `greater`
+### `lessThan`
 
-`greater`関数は、数値型の引数を比較して左側の値が右側の値よりも大きいかどうかを判断することができます。
+`lessThan`関数は、数値型の引数を比較して左側の値が右側の値よりも大きいかどうかを判断することができます。
 
 ```swift
 import VariadicGenericsUtils
 
-let result = greater(left: 0, 4.1, 2.2, right: 1, 4.2, 5.2)
+let result = lessThan(left: 0, 4.1, 2.2, right: 1, 4.2, 5.2)
 print(result)
 // 出力: true
-```
-
-### SwiftUI
-
-また、`SwiftUI`向けに、`@ViewBuilder`の`View`の数の制約を除去する機能を提供します。
-
-```swift
-import VariadicGenericsUtils
-
-var body: some View {
-    VStack {
-        View0()
-        View1()
-        View2()
-        View3()
-        View4()
-        View5()
-        View6()
-        View7()
-        View8()
-        View9()
-        View10()
-        View11()
-    }
-}
 ```
 
 ## ライセンス
